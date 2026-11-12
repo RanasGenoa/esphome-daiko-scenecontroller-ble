@@ -22,12 +22,8 @@ CONFIG_SCHEMA = light.LIGHT_SCHEMA.extend(
         cv.GenerateID(CONF_DAIKO_SCENECONTROLLER_BLE_ID): cv.use_id(DaikoMeshComponent),
         cv.Optional(CONF_CIRCUIT, default=1): cv.int_range(min=1, max=6),
         cv.Optional(CONF_TYPE, default="auto"): cv.enum(LIGHT_TYPES, lower=True),
-        cv.Optional(CONF_MIN_MIREDS, default=200.0): cv.float_range(
-            min=100.0, max=500.0
-        ),
-        cv.Optional(CONF_MAX_MIREDS, default=370.0): cv.float_range(
-            min=100.0, max=500.0
-        ),
+        cv.Optional(CONF_MIN_MIREDS, default=200.0): cv.float_range(min=100.0, max=500.0),
+        cv.Optional(CONF_MAX_MIREDS, default=370.0): cv.float_range(min=100.0, max=500.0),
     }
 ).extend(cv.COMPONENT_SCHEMA)
 
