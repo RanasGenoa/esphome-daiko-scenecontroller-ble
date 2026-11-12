@@ -33,9 +33,7 @@ CONFIG_SCHEMA = (
     button.button_schema(DaikoMeshButton)
     .extend(
         {
-            cv.GenerateID(CONF_DAIKO_SCENECONTROLLER_BLE_ID): cv.use_id(
-                DaikoMeshComponent
-            ),
+            cv.GenerateID(CONF_DAIKO_SCENECONTROLLER_BLE_ID): cv.use_id(DaikoMeshComponent),
             cv.Required(CONF_TYPE): cv.enum(BUTTON_TYPES, lower=True),
             cv.Optional(CONF_SCENE_ID, default=1): cv.int_range(min=1, max=6),
         }

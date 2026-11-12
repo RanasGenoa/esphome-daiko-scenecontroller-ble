@@ -14,9 +14,7 @@ DEPENDENCIES = ["daiko_scenecontroller_ble"]
 DaikoMeshBinarySensor = daiko_scenecontroller_ble_ns.class_(
     "DaikoMeshBinarySensor", binary_sensor.BinarySensor, cg.Component
 )
-DaikoBinarySensorType = daiko_scenecontroller_ble_ns.enum(
-    "DaikoBinarySensorType", is_class=True
-)
+DaikoBinarySensorType = daiko_scenecontroller_ble_ns.enum("DaikoBinarySensorType", is_class=True)
 
 BINARY_SENSOR_TYPES = {
     "connected": DaikoBinarySensorType.CONNECTED,
@@ -29,9 +27,7 @@ CONFIG_SCHEMA = (
     )
     .extend(
         {
-            cv.GenerateID(CONF_DAIKO_SCENECONTROLLER_BLE_ID): cv.use_id(
-                DaikoMeshComponent
-            ),
+            cv.GenerateID(CONF_DAIKO_SCENECONTROLLER_BLE_ID): cv.use_id(DaikoMeshComponent),
             cv.Required(CONF_TYPE): cv.enum(BINARY_SENSOR_TYPES, lower=True),
         }
     )

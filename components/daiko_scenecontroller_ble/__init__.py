@@ -26,9 +26,7 @@ AUTO_LOAD = ["light", "button", "sensor", "binary_sensor", "text_sensor"]
 MULTI_CONF = False
 
 daiko_scenecontroller_ble_ns = cg.esphome_ns.namespace("daiko_scenecontroller_ble")
-DaikoMeshComponent = daiko_scenecontroller_ble_ns.class_(
-    "DaikoMeshComponent", cg.PollingComponent
-)
+DaikoMeshComponent = daiko_scenecontroller_ble_ns.class_("DaikoMeshComponent", cg.PollingComponent)
 
 DaikoMeshLight = daiko_scenecontroller_ble_ns.class_(
     "DaikoMeshLight", light.LightOutput, cg.Component
@@ -48,16 +46,12 @@ DaikoSensorType = daiko_scenecontroller_ble_ns.enum("DaikoSensorType", is_class=
 DaikoMeshBinarySensor = daiko_scenecontroller_ble_ns.class_(
     "DaikoMeshBinarySensor", binary_sensor.BinarySensor, cg.Component
 )
-DaikoBinarySensorType = daiko_scenecontroller_ble_ns.enum(
-    "DaikoBinarySensorType", is_class=True
-)
+DaikoBinarySensorType = daiko_scenecontroller_ble_ns.enum("DaikoBinarySensorType", is_class=True)
 
 DaikoMeshTextSensor = daiko_scenecontroller_ble_ns.class_(
     "DaikoMeshTextSensor", text_sensor.TextSensor, cg.Component
 )
-DaikoTextSensorType = daiko_scenecontroller_ble_ns.enum(
-    "DaikoTextSensorType", is_class=True
-)
+DaikoTextSensorType = daiko_scenecontroller_ble_ns.enum("DaikoTextSensorType", is_class=True)
 
 CONF_DAIKO_SCENECONTROLLER_BLE_ID = "daiko_scenecontroller_ble_id"
 CONF_NET_KEY = "net_key"
@@ -124,9 +118,7 @@ def validate_hex_key_16(value):
     try:
         int(value, 16)
     except ValueError as err:
-        raise cv.Invalid(
-            "Key must contain only hexadecimal characters (0-9, A-F)"
-        ) from err
+        raise cv.Invalid("Key must contain only hexadecimal characters (0-9, A-F)") from err
     return value.upper()
 
 
@@ -135,12 +127,8 @@ AUTO_LIGHT_SCHEMA = light.LIGHT_SCHEMA.extend(
         cv.GenerateID(CONF_OUTPUT_ID): cv.declare_id(DaikoMeshLight),
         cv.Optional(CONF_CIRCUIT, default=1): cv.int_range(min=1, max=6),
         cv.Optional(CONF_TYPE, default="auto"): cv.enum(LIGHT_TYPES, lower=True),
-        cv.Optional(CONF_MIN_MIREDS, default=200.0): cv.float_range(
-            min=100.0, max=500.0
-        ),
-        cv.Optional(CONF_MAX_MIREDS, default=370.0): cv.float_range(
-            min=100.0, max=500.0
-        ),
+        cv.Optional(CONF_MIN_MIREDS, default=200.0): cv.float_range(min=100.0, max=500.0),
+        cv.Optional(CONF_MAX_MIREDS, default=370.0): cv.float_range(min=100.0, max=500.0),
         cv.Optional(CONF_OBJECT_ID_OVERRIDE): cv.string_strict,
     }
 ).extend(cv.COMPONENT_SCHEMA)
@@ -361,18 +349,12 @@ def _default_auto_text_sensors():
 def _populate_auto_entities(config):
     config = dict(config)
     if config.get(CONF_AUTO_CREATE_ENTITIES, True):
-        config[CONF_AUTO_LIGHTS] = cv.Schema([AUTO_LIGHT_SCHEMA])(
-            _default_auto_lights()
-        )
-        config[CONF_AUTO_BUTTONS] = cv.Schema([AUTO_BUTTON_SCHEMA])(
-            _default_auto_buttons()
-        )
+        config[CONF_AUTO_LIGHTS] = cv.Schema([AUTO_LIGHT_SCHEMA])(_default_auto_lights())
+        config[CONF_AUTO_BUTTONS] = cv.Schema([AUTO_BUTTON_SCHEMA])(_default_auto_buttons())
         config[CONF_AUTO_BINARY_SENSORS] = cv.Schema([AUTO_BINARY_SENSOR_SCHEMA])(
             _default_auto_binary_sensors()
         )
-        config[CONF_AUTO_SENSORS] = cv.Schema([AUTO_SENSOR_SCHEMA])(
-            _default_auto_sensors()
-        )
+        config[CONF_AUTO_SENSORS] = cv.Schema([AUTO_SENSOR_SCHEMA])(_default_auto_sensors())
         config[CONF_AUTO_TEXT_SENSORS] = cv.Schema([AUTO_TEXT_SENSOR_SCHEMA])(
             _default_auto_text_sensors()
         )

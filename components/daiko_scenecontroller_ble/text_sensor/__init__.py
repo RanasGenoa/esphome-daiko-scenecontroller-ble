@@ -14,9 +14,7 @@ DEPENDENCIES = ["daiko_scenecontroller_ble"]
 DaikoMeshTextSensor = daiko_scenecontroller_ble_ns.class_(
     "DaikoMeshTextSensor", text_sensor.TextSensor, cg.Component
 )
-DaikoTextSensorType = daiko_scenecontroller_ble_ns.enum(
-    "DaikoTextSensorType", is_class=True
-)
+DaikoTextSensorType = daiko_scenecontroller_ble_ns.enum("DaikoTextSensorType", is_class=True)
 
 TEXT_SENSOR_TYPES = {
     "self_address": DaikoTextSensorType.SELF_ADDRESS,
@@ -29,9 +27,7 @@ CONFIG_SCHEMA = (
     text_sensor.text_sensor_schema(DaikoMeshTextSensor)
     .extend(
         {
-            cv.GenerateID(CONF_DAIKO_SCENECONTROLLER_BLE_ID): cv.use_id(
-                DaikoMeshComponent
-            ),
+            cv.GenerateID(CONF_DAIKO_SCENECONTROLLER_BLE_ID): cv.use_id(DaikoMeshComponent),
             cv.Required(CONF_TYPE): cv.enum(TEXT_SENSOR_TYPES, lower=True),
         }
     )

@@ -48,24 +48,20 @@ class TestContributorGuardrails(unittest.TestCase):
             ast.parse(source, filename=str(py_file))
 
     def test_auto_discovery_and_unified_light_entity_invariants(self) -> None:
-        init_py = (
-            REPO_ROOT / "components/daiko_scenecontroller_ble/__init__.py"
-        ).read_text(encoding="utf-8")
+        init_py = (REPO_ROOT / "components/daiko_scenecontroller_ble/__init__.py").read_text(
+            encoding="utf-8"
+        )
         light_h = (
-            REPO_ROOT
-            / "components/daiko_scenecontroller_ble/daiko_scenecontroller_ble_light.h"
+            REPO_ROOT / "components/daiko_scenecontroller_ble/daiko_scenecontroller_ble_light.h"
         ).read_text(encoding="utf-8")
         light_cpp = (
-            REPO_ROOT
-            / "components/daiko_scenecontroller_ble/daiko_scenecontroller_ble_light.cpp"
+            REPO_ROOT / "components/daiko_scenecontroller_ble/daiko_scenecontroller_ble_light.cpp"
         ).read_text(encoding="utf-8")
         header_src = (
-            REPO_ROOT
-            / "components/daiko_scenecontroller_ble/daiko_scenecontroller_ble.h"
+            REPO_ROOT / "components/daiko_scenecontroller_ble/daiko_scenecontroller_ble.h"
         ).read_text(encoding="utf-8")
         cpp_src = (
-            REPO_ROOT
-            / "components/daiko_scenecontroller_ble/daiko_scenecontroller_ble.cpp"
+            REPO_ROOT / "components/daiko_scenecontroller_ble/daiko_scenecontroller_ble.cpp"
         ).read_text(encoding="utf-8")
         yaml_src = (REPO_ROOT / "daiko_controller.yaml").read_text(encoding="utf-8")
 
@@ -104,12 +100,10 @@ class TestContributorGuardrails(unittest.TestCase):
     def test_ble_mesh_iv_index_and_recovery_invariants(self) -> None:
         yaml_src = (REPO_ROOT / "daiko_controller.yaml").read_text(encoding="utf-8")
         header_src = (
-            REPO_ROOT
-            / "components/daiko_scenecontroller_ble/daiko_scenecontroller_ble.h"
+            REPO_ROOT / "components/daiko_scenecontroller_ble/daiko_scenecontroller_ble.h"
         ).read_text(encoding="utf-8")
         cpp_src = (
-            REPO_ROOT
-            / "components/daiko_scenecontroller_ble/daiko_scenecontroller_ble.cpp"
+            REPO_ROOT / "components/daiko_scenecontroller_ble/daiko_scenecontroller_ble.cpp"
         ).read_text(encoding="utf-8")
 
         # Mandatory Kconfig for Secure Network Beacon IV recovery
@@ -127,12 +121,10 @@ class TestContributorGuardrails(unittest.TestCase):
 
     def test_loopback_filtering_and_bounded_rotation_invariants(self) -> None:
         header_src = (
-            REPO_ROOT
-            / "components/daiko_scenecontroller_ble/daiko_scenecontroller_ble.h"
+            REPO_ROOT / "components/daiko_scenecontroller_ble/daiko_scenecontroller_ble.h"
         ).read_text(encoding="utf-8")
         cpp_src = (
-            REPO_ROOT
-            / "components/daiko_scenecontroller_ble/daiko_scenecontroller_ble.cpp"
+            REPO_ROOT / "components/daiko_scenecontroller_ble/daiko_scenecontroller_ble.cpp"
         ).read_text(encoding="utf-8")
 
         self.assertIn("MAX_AUTO_ROTATION_STREAK = 2", header_src)
@@ -143,12 +135,10 @@ class TestContributorGuardrails(unittest.TestCase):
 
     def test_light_throttling_and_hardware_dual_state_invariants(self) -> None:
         light_h = (
-            REPO_ROOT
-            / "components/daiko_scenecontroller_ble/daiko_scenecontroller_ble_light.h"
+            REPO_ROOT / "components/daiko_scenecontroller_ble/daiko_scenecontroller_ble_light.h"
         ).read_text(encoding="utf-8")
         header_src = (
-            REPO_ROOT
-            / "components/daiko_scenecontroller_ble/daiko_scenecontroller_ble.h"
+            REPO_ROOT / "components/daiko_scenecontroller_ble/daiko_scenecontroller_ble.h"
         ).read_text(encoding="utf-8")
 
         self.assertIn("THROTTLE_INTERVAL_MS = 330", light_h)
@@ -159,9 +149,7 @@ class TestContributorGuardrails(unittest.TestCase):
     def test_no_private_keys_local_paths_private_ips_or_binaries(self) -> None:
         self_path = Path(__file__).resolve()
         private_key_re = re.compile(r"-----BEGIN [A-Z0-9 ]*PRIVATE KEY-----")
-        local_home_re = re.compile(
-            r"/(Users|home)/(?!ubuntu|runner|user\b)[a-zA-Z0-9_-]+/"
-        )
+        local_home_re = re.compile(r"/(Users|home)/(?!ubuntu|runner|user\b)[a-zA-Z0-9_-]+/")
         private_ip_re = re.compile(r"\b192\.168\.\d{1,3}\.\d{1,3}\b")
         forbidden_exts = {".apk", ".so", ".ab", ".dex", ".arsc", ".bin", ".pdf"}
 
@@ -176,15 +164,9 @@ class TestContributorGuardrails(unittest.TestCase):
                 continue
 
             content = file_path.read_text(encoding="utf-8")
-            self.assertNotRegex(
-                content, private_key_re, f"Private key detected in {rel}"
-            )
-            self.assertNotRegex(
-                content, local_home_re, f"Hardcoded host path detected in {rel}"
-            )
-            self.assertNotRegex(
-                content, private_ip_re, f"Private LAN IP detected in {rel}"
-            )
+            self.assertNotRegex(content, private_key_re, f"Private key detected in {rel}")
+            self.assertNotRegex(content, local_home_re, f"Hardcoded host path detected in {rel}")
+            self.assertNotRegex(content, private_ip_re, f"Private LAN IP detected in {rel}")
 
     def test_no_reverse_engineering_or_proprietary_internal_terms(self) -> None:
         self_path = Path(__file__).resolve()
@@ -250,16 +232,14 @@ class TestContributorGuardrails(unittest.TestCase):
 
     def test_standalone_pairing_invariants(self) -> None:
         header_src = (
-            REPO_ROOT
-            / "components/daiko_scenecontroller_ble/daiko_scenecontroller_ble.h"
+            REPO_ROOT / "components/daiko_scenecontroller_ble/daiko_scenecontroller_ble.h"
         ).read_text(encoding="utf-8")
         cpp_src = (
-            REPO_ROOT
-            / "components/daiko_scenecontroller_ble/daiko_scenecontroller_ble.cpp"
+            REPO_ROOT / "components/daiko_scenecontroller_ble/daiko_scenecontroller_ble.cpp"
         ).read_text(encoding="utf-8")
-        init_py = (
-            REPO_ROOT / "components/daiko_scenecontroller_ble/__init__.py"
-        ).read_text(encoding="utf-8")
+        init_py = (REPO_ROOT / "components/daiko_scenecontroller_ble/__init__.py").read_text(
+            encoding="utf-8"
+        )
 
         # Documentation invariants: pairing guide must exist, key extraction guide must be deleted
         self.assertTrue(
@@ -285,9 +265,7 @@ class TestContributorGuardrails(unittest.TestCase):
         self.assertIn("pairing_state", init_py)
 
     def test_ai_review_workflow_concurrency_isolation(self) -> None:
-        workflow = (REPO_ROOT / ".github/workflows/ai-review.yml").read_text(
-            encoding="utf-8"
-        )
+        workflow = (REPO_ROOT / ".github/workflows/ai-review.yml").read_text(encoding="utf-8")
         self.assertRegex(
             workflow,
             r"group:\s*\$\{\{\s*github\.workflow\s*\}\}-\$\{\{\s*github\.event_name\s*\}\}-\$\{\{\s*github\.event\.pull_request\.number\s*\|\|\s*github\.ref\s*\}\}",

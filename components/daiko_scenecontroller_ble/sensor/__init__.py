@@ -29,9 +29,7 @@ CONFIG_SCHEMA = (
     )
     .extend(
         {
-            cv.GenerateID(CONF_DAIKO_SCENECONTROLLER_BLE_ID): cv.use_id(
-                DaikoMeshComponent
-            ),
+            cv.GenerateID(CONF_DAIKO_SCENECONTROLLER_BLE_ID): cv.use_id(DaikoMeshComponent),
             cv.Required(CONF_TYPE): cv.enum(SENSOR_TYPES, lower=True),
         }
     )
