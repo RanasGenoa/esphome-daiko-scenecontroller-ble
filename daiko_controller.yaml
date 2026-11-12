@@ -1,0 +1,79 @@
+substitutions:
+  name: "daiko-controller"
+  friendly_name: "DAIKO Scene Controller"
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+    sdkconfig_options:
+      CONFIG_BT_ENABLED: y
+      CONFIG_BTDM_CTRL_MODE_BLE_ONLY: y
+      CONFIG_BT_BLUEDROID_ENABLED: y
+      CONFIG_BLE_MESH: y
+      CONFIG_BLE_MESH_PROVISIONER: y
+      CONFIG_BLE_MESH_PB_ADV: y
+      CONFIG_BLE_MESH_CFG_CLI: y
+      CONFIG_BLE_MESH_IVU_RECOVERY_IVI: y
+
+logger:
+  level: INFO
+  baud_rate: 115200
+
+# Optional: Syslog forwarding for WARN/ERROR alerts
+# time:
+#   - platform: homeassistant
+#     id: ha_time
+#
+# udp:
+#   addresses: <SYSLOG_SERVER_IP>
+#
+# syslog:
+#   level: WARN
+
+# Home Assistant Native API
+api:
+  encryption:
+    key: !secret api_encryption_key
+
+# OTA (Over-The-Air) Updates
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  power_save_mode: NONE
+  ap:
+    ssid: "Daiko-Controller-AP"
+    password: !secret wifi_hotspot_password
+
+captive_portal:
+
+# External Components
+# For remote installation from GitHub, use:
+#   source: github://RanasGenoa/esphome-daiko-scenecontroller-ble@main
+external_components:
+  - source: components
+    components: [daiko_scenecontroller_ble]
+
+# DAIKO Scene Controller BLE Mesh Hub Configuration
+# By default (auto_create_entities: true), all entities (Master Power light,
+# Circuits 1..6 lights with automatic hardware circuit type detection,
+# Scene 1..6 & control buttons, and diagnostic sensors) are automatically
+# created and exposed to Home Assistant without manual entity definitions.
+daiko_scenecontroller_ble:
+  id: daiko_hub
+  net_key: !secret daiko_net_key
+  app_key: !secret daiko_app_key
+  controller_address: 0x0004
+  group_address: 0xC078
+  self_address: 0x0020
+  update_interval: 5s
+  auto_recovery_timeout: 90s
+  auto_create_entities: true

@@ -1,0 +1,41 @@
+name: CI (Guardrails & ESPHome Config Verification)
+
+on:
+  push:
+    branches: [ main, 'release/**' ]
+  pull_request:
+    branches: [ main, 'release/**' ]
+
+jobs:
+  verify:
+    name: Guardrail Tests & ESPHome Verification
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install Ruff & ESPHome
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff esphome
+
+      - name: Run PR Quality, Security & Legal Guardrail Suite
+        run: python3 -m unittest discover -s tests -v
+
+      - name: Code Quality & Lint Check (Ruff)
+        run: |
+          ruff check components tests
+          ruff format --check components tests
+
+      - name: Prepare example secrets.yaml
+        run: cp secrets.yaml.example secrets.yaml
+
+      - name: Verify ESPHome Configuration & C++ Code Generation
+        run: esphome config daiko_controller.yaml

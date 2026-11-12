@@ -1,0 +1,23 @@
+# ESPHome build artifacts & secrets
+.esphome/
+secrets.yaml
+
+# Python virtual environment & bytecode cache
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+
+# Local development workspace & temporary files
+.local/
+.cache/
+tmp/
+*.log
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
