@@ -154,7 +154,7 @@ esphome run daiko_controller.yaml --device /dev/cu.usbserial-XXXX
 
 ### 4. ペアリングの実行
 
-1. 壁面の `DP-41924` を初期化モード（リセット）にします（手順は [PAIRING_GUIDE.md](PAIRING_GUIDE.md) を参照）。
+1. 壁面の `DP-41924` 本体でペアリング解除（`bL` メニューから `bL:dE` で設定を削除）を行い、`通信ランプ（青色）`（青い通信 LED）が等間隔で点滅していることを確認します（詳細手順は [PAIRING_GUIDE.md](PAIRING_GUIDE.md) を参照）。
 2. Home Assistant のエンティティ一覧から `button.daiko_start_pairing`（ペアリング開始）を押下します。
 3. ESP32 が自動的に未プロビジョニングビーコンを検出し、プロビジョニング、AppKey 登録、モデルバインド、グループ購読設定を完了させます。
 4. ペアリング完了後、`DP-41924` から `CtrlInfo`（`51 01`）を取得して回路種別（ON/OFF・調光・調光調色）を自動検出し、最適な Home Assistant ライト属性（`ON_OFF` / `BRIGHTNESS` / `COLOR_TEMPERATURE`）を反映します。
@@ -204,7 +204,7 @@ esphome run daiko_controller.yaml --device /dev/cu.usbserial-XXXX
 
 ## ドキュメント一覧
 
-- **[PAIRING_GUIDE.md](PAIRING_GUIDE.md)**: ペアリング・初期化手順書（壁面コントローラーのリセットとプロビジョニング）
+- **[PAIRING_GUIDE.md](PAIRING_GUIDE.md)**: ペアリング・初期化手順書（壁面コントローラーのペアリング解除・初期化とプロビジョニング）
 - **[docs/PROTOCOL_SPEC.md](docs/PROTOCOL_SPEC.md)**: BLE Mesh ベンダープロトコル仕様書（Opcode、サブコマンド、`CtrlInfo` / `LevelInfo` フォーマット）
 - **[docs/ARCHITECTURE_AND_BEHAVIOR.md](docs/ARCHITECTURE_AND_BEHAVIOR.md)**: 内部制御モデルと設計アーキテクチャ仕様書
 - **[docs/TROUBLESHOOTING_AND_MAINTENANCE_GUIDE.md](docs/TROUBLESHOOTING_AND_MAINTENANCE_GUIDE.md)**: BLE Mesh 通信トラブルシューティングと保守改修ガイド
