@@ -120,6 +120,7 @@ ESP32 にファームウェアを書き込み、起動します。
 > 参考: 大光電機 `DP-41924` 製品詳細・取扱説明書（`O01-41924-1`）
 > - 製品詳細ページ: https://src.lighting-daiko.co.jp/products/app/search/item/detail/pid/DP-41924
 > - 取扱・施工説明書 PDF: https://src.lighting-daiko.co.jp/products/app/api/file/raw/id/4601760000
+> - ※メーカー側の Web サイト構成変更やリソース ID 変更等によりリンク切れとなる場合があります。その場合は型番 `DP-41924` または説明書番号 `O01-41924-1` を参照してください。
 
 ### Step 4: Home Assistant からペアリング開始
 1. Home Assistant のダッシュボードを開きます。
